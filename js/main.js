@@ -1,4 +1,5 @@
 // 1 - variables
+
 const boton = $('#boton');
 const contenido = $('#contenido');
 const numero = $('#numero');
@@ -25,6 +26,30 @@ const mostrarUsuarios = () => {
     });
     console.log(indices);
 
+    let miContenido = '';
+    // recorremos el array con las posiciones del array indices
+    for (let i = 0; i < indices.length; i++) {
+        let nombre = `${listadoUsuarios[indices[i]].name.title}. 
+        ${listadoUsuarios[indices[i]].name.first} 
+        ${listadoUsuarios[indices[i]].name.last}`
+        let rutaImg = listadoUsuarios[indices[i]].picture.large;
+        // actualizamos el contenido
+        miContenido +=
+            /* html */
+            `
+        <div class="d-inline">
+        <figure class="figure">
+            <img src="${rutaImg}" class="figure-img img-fluid rounded-circle" alt="${nombre}">
+            <figcaption class="figure-caption text-center">${nombre}</figcaption>
+        </figure>
+        </div>
+        `;
+    }
+    contenido.fadeOut("fast", function () {
+        $(this)
+            .fadeIn("fast")
+            .html(miContenido);
+    });
 
 };
 
@@ -86,6 +111,7 @@ const inicializar = () => {
 
 // equivalente a lo de arriba
 boton.on('click', prepararUrl);
+// cada vez que pulsemos una tecla en la barra de busqueda, se ejecuta mostrarUsuarios
 busqueda.on('keyup', mostrarUsuarios);
 $(document).ready(function () {
     inicializar();
